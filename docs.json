@@ -34,7 +34,17 @@
             "group": "Class Transcripts",
             "pages": [
               "classes/contracts/transcripts/index",
-              "classes/contracts/transcripts/session-01"
+              "classes/contracts/transcripts/session-01",
+              "classes/contracts/transcripts/session-02",
+              "classes/contracts/transcripts/session-03",
+              "classes/contracts/transcripts/session-04",
+              "classes/contracts/transcripts/session-05",
+              "classes/contracts/transcripts/session-06",
+              "classes/contracts/transcripts/session-07",
+              "classes/contracts/transcripts/session-08",
+              "classes/contracts/transcripts/session-09",
+              "classes/contracts/transcripts/session-10",
+              "classes/contracts/transcripts/session-11"
             ]
           }
         ]
