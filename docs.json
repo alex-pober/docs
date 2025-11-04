@@ -31,6 +31,14 @@
             ]
           },
           {
+            "group": "Class Notes",
+            "pages": [
+              "classes/contracts/notes/session-01",
+              "classes/contracts/notes/session-02",
+              "classes/contracts/notes/session-03"
+            ]
+          },
+          {
             "group": "Class Transcripts",
             "pages": [
               "classes/contracts/transcripts/index",
