@@ -1,99 +1,118 @@
 #!/bin/bash
 
-# Universal script to convert Class*.txt transcripts to properly formatted MDX files
-# Works for any class: Contracts, Torts, Property, etc.
+# Script to convert a single .vtt transcript file to properly formatted MDX
+# Parses VTT (WebVTT) format and creates LLM-friendly transcripts
 #
-# Usage: ./convert-transcripts.sh <class-name>
-# Example: ./convert-transcripts.sh contracts
-#          ./convert-transcripts.sh torts
-#          ./convert-transcripts.sh property
+# Usage: ./convert-transcripts.sh <path-to-vtt-file>
+# Example: ./convert-transcripts.sh classes/torts/transcripts/Class01.vtt
 
-# Check if class name is provided
+# Check if file path is provided
 if [ -z "$1" ]; then
-  echo "Error: Please provide a class name"
-  echo "Usage: ./convert-transcripts.sh <class-name>"
-  echo "Example: ./convert-transcripts.sh contracts"
+  echo "Error: Please provide a path to a .vtt file"
+  echo "Usage: ./convert-transcripts.sh <path-to-vtt-file>"
+  echo "Example: ./convert-transcripts.sh classes/torts/transcripts/Class01.vtt"
   exit 1
 fi
 
-CLASS_NAME=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-TRANSCRIPT_DIR="../classes/${CLASS_NAME}/transcripts"
+VTT_FILE="$1"
 
-# Check if directory exists
-if [ ! -d "$TRANSCRIPT_DIR" ]; then
-  echo "Error: Directory not found: $TRANSCRIPT_DIR"
-  echo "Please create the directory first or check the class name"
+# Check if file exists
+if [ ! -f "$VTT_FILE" ]; then
+  echo "Error: File not found: $VTT_FILE"
   exit 1
 fi
 
+# Check if it's a .vtt file
+if [[ ! "$VTT_FILE" =~ \.vtt$ ]]; then
+  echo "Error: File must have .vtt extension"
+  exit 1
+fi
+
+# Extract the directory and filename
+DIR_PATH=$(dirname "$VTT_FILE")
+FILENAME=$(basename "$VTT_FILE" .vtt)
+
+# Create output filename (convert Class01 to session-01)
+if [[ "$FILENAME" =~ ^Class([0-9]+)$ ]]; then
+  SESSION_NUM="${BASH_REMATCH[1]}"
+  # Pad with leading zero if needed
+  SESSION_NUM=$(printf "%02d" $((10#$SESSION_NUM)))
+  MDX_FILE="${DIR_PATH}/session-${SESSION_NUM}.mdx"
+else
+  # If not in ClassXX format, just replace .vtt with .mdx
+  MDX_FILE="${DIR_PATH}/${FILENAME}.mdx"
+fi
+
+# Extract class name from path (e.g., "torts" from "classes/torts/transcripts")
+if [[ "$DIR_PATH" =~ classes/([^/]+)/transcripts ]]; then
+  CLASS_NAME="${BASH_REMATCH[1]}"
+  # Capitalize first letter
+  CLASS_NAME_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${CLASS_NAME:0:1})${CLASS_NAME:1}"
+else
+  CLASS_NAME="Class"
+  CLASS_NAME_CAPITALIZED="Class"
+fi
+
 echo "=========================================="
-echo "Converting $CLASS_NAME transcripts"
+echo "Converting VTT to MDX"
 echo "=========================================="
+echo "Input:  $VTT_FILE"
+echo "Output: $MDX_FILE"
 echo ""
 
-cd "$TRANSCRIPT_DIR" || exit 1
-
-converted_count=0
-
-for i in {01..20}; do
-  txt_file="Class${i}.txt"
-  mdx_file="session-${i}.mdx"
-
-  # Check if the txt file exists
-  if [ ! -f "$txt_file" ]; then
-    continue
-  fi
-
-  echo "Converting $txt_file to $mdx_file..."
-
-  # Create MDX file with frontmatter
-  cat > "$mdx_file" << EOF
+# Create MDX file with frontmatter
+cat > "$MDX_FILE" << EOF
 ---
-title: "Session ${i}"
-description: "${CLASS_NAME^} class session ${i} transcript"
+title: "Session ${SESSION_NUM}"
+description: "${CLASS_NAME_CAPITALIZED} class session ${SESSION_NUM} transcript"
 ---
 
-# ${CLASS_NAME^} - Session ${i}
+# ${CLASS_NAME_CAPITALIZED} - Session ${SESSION_NUM}
 
 ## Transcript
 
 EOF
 
-  # Append the transcript content with all cleaning steps
-  cat "$txt_file" | \
-    # Remove non-breaking spaces (char 160)
-    LC_ALL=C sed 's/\xC2\xA0/ /g' | \
-    # Escape dollar signs for LaTeX
-    sed 's/\$/\\$/g' | \
-    # Add two trailing spaces to preserve line breaks in Markdown
-    awk 'NF > 0 { print $0 "  " } NF == 0 { print }' \
-    >> "$mdx_file"
+# Parse VTT file and extract only speaker dialogue
+# Remove: WEBVTT header, numeric IDs, timestamps, keep only "Speaker: dialogue" lines
+# First convert Windows line endings to Unix
+tr -d '\r' < "$VTT_FILE" | awk '
+  BEGIN {
+    in_entry = 0
+    prev_blank = 0
+  }
+  # Skip WEBVTT header
+  /^WEBVTT/ { next }
+  # Skip timestamp lines (contain -->)
+  /-->/ { next }
+  # Skip numeric entry IDs (lines that are only digits)
+  /^[0-9]+$/ { next }
+  # Empty lines - track but only output one between entries
+  /^[[:space:]]*$/ {
+    if (in_entry) {
+      print ""
+      in_entry = 0
+      prev_blank = 1
+    }
+    next
+  }
+  # Lines with content (Speaker: dialogue)
+  {
+    in_entry = 1
+    prev_blank = 0
+    print $0
+  }
+' | \
+  # Remove non-breaking spaces
+  LC_ALL=C sed 's/\xC2\xA0/ /g' | \
+  # Escape dollar signs for LaTeX
+  sed 's/\$/\\$/g' | \
+  # Clean up multiple consecutive blank lines
+  cat -s \
+  >> "$MDX_FILE"
 
-  echo "  ✓ Created $mdx_file"
-  converted_count=$((converted_count + 1))
-done
-
-echo ""
 echo "=========================================="
-echo "Conversion complete!"
-echo "Converted $converted_count transcript(s)"
+echo "✓ Conversion complete!"
 echo "=========================================="
 echo ""
-echo "Next steps:"
-echo "1. Update docs.json navigation to include all session files"
-echo "   Location: classes/${CLASS_NAME}/transcripts/session-*.mdx"
-echo ""
-echo "2. Add to docs.json navigation:"
-echo "   {"
-echo "     \"group\": \"Class Transcripts\","
-echo "     \"pages\": ["
-echo "       \"classes/${CLASS_NAME}/transcripts/index\","
-for i in {01..20}; do
-  if [ -f "session-${i}.mdx" ]; then
-    echo "       \"classes/${CLASS_NAME}/transcripts/session-${i}\","
-  fi
-done | sed '$ s/,$//'
-echo "     ]"
-echo "   }"
-echo ""
-echo "3. Test in Mintlify to ensure proper rendering"
+echo "Created: $MDX_FILE"
