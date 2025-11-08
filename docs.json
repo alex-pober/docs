@@ -27,7 +27,7 @@
           {
             "group": "Overview",
             "pages": [
-              "classes/contracts/Overview"
+              "classes/contracts/index"
             ]
           },
           {
