@@ -25,9 +25,9 @@
         "tab": "Contracts",
         "groups": [
           {
-            "group": "Contracts",
+            "group": "Outlines",
             "pages": [
-              "classes/contracts/index"
+              "classes/contracts/notes/Fryk-Outline"
             ]
           },
           {
@@ -35,11 +35,21 @@
             "pages": [
               "classes/contracts/notes/session-01",
               "classes/contracts/notes/session-02",
-              "classes/contracts/notes/session-03"
+              "classes/contracts/notes/session-03",
+              "classes/contracts/notes/session-04",
+              "classes/contracts/notes/session-05",
+              "classes/contracts/notes/session-06",
+              "classes/contracts/notes/session-07",
+              "classes/contracts/notes/session-08",
+              "classes/contracts/notes/session-09",
+              "classes/contracts/notes/session-10",
+              "classes/contracts/notes/session-11",
+              "classes/contracts/notes/session-12"
             ]
           },
           {
             "group": "Class Transcripts",
+            "expanded": false,
             "pages": [
               "classes/contracts/transcripts/index",
               "classes/contracts/transcripts/session-01",
@@ -52,7 +62,8 @@
               "classes/contracts/transcripts/session-08",
               "classes/contracts/transcripts/session-09",
               "classes/contracts/transcripts/session-10",
-              "classes/contracts/transcripts/session-11"
+              "classes/contracts/transcripts/session-11",
+              "classes/contracts/transcripts/session-12"
             ]
           }
         ]
