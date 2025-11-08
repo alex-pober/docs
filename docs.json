@@ -25,6 +25,12 @@
         "tab": "Contracts",
         "groups": [
           {
+            "group": "Overview",
+            "pages": [
+              "classes/contracts/index"
+            ]
+          },
+          {
             "group": "Outlines",
             "pages": [
               "classes/contracts/notes/Fryk-Outline"
