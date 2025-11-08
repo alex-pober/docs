@@ -25,7 +25,7 @@
         "tab": "Contracts",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Main",
             "pages": [
               "classes/contracts/index"
             ]
