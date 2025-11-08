@@ -55,7 +55,6 @@
           },
           {
             "group": "Class Transcripts",
-            "expanded": false,
             "pages": [
               "classes/contracts/transcripts/index",
               "classes/contracts/transcripts/session-01",
