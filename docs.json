@@ -33,7 +33,8 @@
           {
             "group": "Outlines",
             "pages": [
-              "classes/contracts/outlines/fryk-outline"
+              "classes/contracts/outlines/fryk-outline",
+              "classes/contracts/outlines/outline"
             ]
           },
           {
@@ -51,7 +52,8 @@
               "classes/contracts/notes/session-10",
               "classes/contracts/notes/session-11",
               "classes/contracts/notes/session-12",
-              "classes/contracts/notes/session-13"
+              "classes/contracts/notes/session-13",
+              "classes/contracts/notes/session-14"
             ]
           },
           {
