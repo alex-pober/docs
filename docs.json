@@ -80,9 +80,9 @@
         "tab": "Torts",
         "groups": [
           {
-            "group": "Torts",
+            "group": "Outlines",
             "pages": [
-              "classes/torts/index"
+              "classes/torts/outlines/Black Letter"
             ]
           },
           {
@@ -111,10 +111,33 @@
             ]
           },
           {
+            "group": "Class Notes",
+            "pages": [
+              "classes/property/notes/session-01",
+              "classes/property/notes/session-02",
+              "classes/property/notes/session-03",
+              "classes/property/notes/session-04",
+              "classes/property/notes/session-05",
+              "classes/property/notes/session-06",
+              "classes/property/notes/session-07",
+              "classes/property/notes/session-08",
+              "classes/property/notes/session-09",
+              "classes/property/notes/session-10",
+              "classes/property/notes/session-11",
+              "classes/property/notes/session-12",
+              "classes/property/notes/session-13",
+              "classes/property/notes/session-14",
+              "classes/property/notes/session-15",
+              "classes/property/notes/review-01"
+            ]
+          },
+          {
             "group": "Class Transcripts",
             "pages": [
               "classes/property/transcripts/index",
-              "classes/property/transcripts/session-01"
+              "classes/property/transcripts/session-01",
+              "classes/property/transcripts/session-02",
+              "classes/property/transcripts/session-03"
             ]
           }
         ]
