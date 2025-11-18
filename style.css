@@ -1,0 +1,44 @@
+/* Override Tailwind's max-width classes on the main content wrapper */
+[class*="peer-"][class*="max-w-"] {
+  max-width: none !important;
+}
+
+[class*="mdx-content"]{
+  margin: auto;
+  max-width: 800px !important;
+}
+
+#header {
+  max-width: 800px !important;
+  margin: auto;
+}
+
+#sidebar-content {
+  padding-right: 0 !important;
+}
+
+#navbar-transition + div {
+  max-width: none !important;
+}
+
+/* Target the entire scrollbar */
+::-webkit-scrollbar {
+  width: 2px; /* Adjust width as desired */
+  background-color: transparent; /* Make the background transparent */
+}
+
+/* Target the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: #8888884c; /* Color of the thumb */
+  border-radius: 2px; /* Rounded corners for the thumb */
+}
+
+/* Target the scrollbar track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Make the track transparent */
+}
+
+/* Optional: Style on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #38383893;
+}
