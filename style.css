@@ -27,10 +27,11 @@
   background-color: transparent; /* Make the background transparent */
 }
 
-/* Target the scrollbar thumb (the draggable part) */
+/* Target the scrollbar thumb (the draggable part) - hidden by default */
 ::-webkit-scrollbar-thumb {
-  background-color: #8888884c; /* Color of the thumb */
+  background-color: transparent; /* Hidden by default */
   border-radius: 2px; /* Rounded corners for the thumb */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 /* Target the scrollbar track (the background of the scrollbar) */
@@ -38,7 +39,12 @@
   background-color: transparent; /* Make the track transparent */
 }
 
-/* Optional: Style on hover */
+/* Show scrollbar when hovering over the page */
+html:hover ::-webkit-scrollbar-thumb {
+  background-color: #8888884c; /* Color of the thumb */
+}
+
+/* Darker on direct hover */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #38383893;
 }
