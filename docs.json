@@ -87,6 +87,26 @@
             ]
           },
           {
+            "group": "Notes",
+            "pages": [
+              "classes/torts/notes/session-01",
+              "classes/torts/notes/session-02",
+              "classes/torts/notes/session-03",
+              "classes/torts/notes/session-04",
+              "classes/torts/notes/session-05",
+              "classes/torts/notes/session-06",
+              "classes/torts/notes/session-07",
+              "classes/torts/notes/session-08",
+              "classes/torts/notes/session-09",
+              "classes/torts/notes/session-10",
+              "classes/torts/notes/session-11",
+              "classes/torts/notes/session-12",
+              "classes/torts/notes/session-13",
+              "classes/torts/notes/session-14",
+              "classes/torts/notes/session-15"
+            ]
+          },
+          {
             "group": "Class Transcripts",
             "pages": [
               "classes/torts/transcripts/index",
